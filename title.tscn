@@ -157,13 +157,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -501.5
+offset_top = -42.51
+offset_right = 501.5
+offset_bottom = 90.49
+grow_horizontal = 2
+grow_vertical = 2
+text = "White Slippery Socks"
+label_settings = SubResource("LabelSettings_kpexm")
+
+[node name="Title2" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -357.0
 offset_top = 120.0
 offset_right = 357.0
 offset_bottom = 237.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Fast Furniture Freestyle"
+text = "In the Color Depths"
 label_settings = SubResource("LabelSettings_kpexm")
 
 [node name="CallToAction" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/SubViewport/Control"]
@@ -177,7 +193,7 @@ text = "Press the space key"
 label_settings = SubResource("LabelSettings_7lgly")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ColorRect/MarginContainer/VBoxContainer"]
-position = Vector2(133, 75)
+position = Vector2(132, 35)
 scale = Vector2(2.5625, 2.5625)
 sprite_frames = SubResource("SpriteFrames_3ranr")
 animation = &"run"
