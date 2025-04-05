@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://dai81pdimkmea"]
+
+[ext_resource type="Script" uid="uid://taj040r8qhmt" path="res://PinkCollectable.gd" id="1_n2pb8"]
+[ext_resource type="Texture2D" uid="uid://x7pnyd2rse23" path="res://assets/images/furniture-sheet.png" id="2_cpm06"]
+[ext_resource type="AudioStream" uid="uid://bagkoi1bpmsqj" path="res://assets/sounds/Analog Bubbles_bip_1bubbles.wav" id="2_f8wbi"]
+[ext_resource type="AudioStream" uid="uid://dc2non6yhlfij" path="res://assets/sounds/level-up.wav" id="3_cpm06"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8wbi"]
+atlas = ExtResource("2_cpm06")
+region = Rect2(192.111, 175.967, 32.4296, 32.4296)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ro77r"]
+size = Vector2(28, 29)
+
+[node name="PinkCollectable" type="Area2D"]
+script = ExtResource("1_n2pb8")
+collect_sound = ExtResource("2_f8wbi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_f8wbi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_ro77r")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cpm06")

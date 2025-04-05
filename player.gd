@@ -1,6 +1,8 @@
 
 extends CharacterBody2D
 enum PlayerState { IDLE, RUN, JUMP, CARTWHEEL }
+var score: int = 0
+signal score_changed(new_score)
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var jump_sfx: AudioStreamPlayer = $jump_sfx
@@ -63,6 +65,10 @@ func do_cartwheel() -> void:
 			change_state(PlayerState.JUMP)
 	)
 		
+func add_score(points: int) -> void:
+	score += points
+	score_changed.emit(score)
+	print("Score: ", score)
 
 func _ready() -> void:
 	camera_2d.zoom = Vector2(max_zoom_amount, max_zoom_amount)

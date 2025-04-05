@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4vpgbgb3ugw"]
+
+[ext_resource type="Script" uid="uid://b6betiichp5lc" path="res://TealCollectable.gd" id="1_o2ny1"]
+[ext_resource type="Texture2D" uid="uid://x7pnyd2rse23" path="res://assets/images/furniture-sheet.png" id="2_lcf08"]
+[ext_resource type="AudioStream" uid="uid://bagkoi1bpmsqj" path="res://assets/sounds/Analog Bubbles_bip_1bubbles.wav" id="3_lcf08"]
+[ext_resource type="AudioStream" uid="uid://dc2non6yhlfij" path="res://assets/sounds/level-up.wav" id="4_424to"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_424to"]
+atlas = ExtResource("2_lcf08")
+region = Rect2(192, 223.25, 32.5, 32.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6eoe3"]
+size = Vector2(30, 29)
+
+[node name="TealCollectable" type="Area2D"]
+script = ExtResource("1_o2ny1")
+collect_sound = ExtResource("3_lcf08")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_424to")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_6eoe3")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_424to")
