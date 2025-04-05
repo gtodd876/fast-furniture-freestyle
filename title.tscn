@@ -1,0 +1,201 @@
+[gd_scene load_steps=22 format=3 uid="uid://7nc2g2cm27yr"]
+
+[ext_resource type="Script" uid="uid://fp0cbrnsvrtt" path="res://title.gd" id="1_7lgly"]
+[ext_resource type="Shader" uid="uid://cm7fqenkd01ot" path="res://title-bg.gdshader" id="1_y7k74"]
+[ext_resource type="Texture2D" uid="uid://cfscjv3rnitfp" path="res://assets/images/piper32-Sheet.png" id="2_kpexm"]
+[ext_resource type="FontFile" uid="uid://bujh3q3760rxo" path="res://assets/fonts/Baumans-Regular.ttf" id="3_3xoar"]
+[ext_resource type="Shader" uid="uid://bf51vyhnh7dvv" path="res://remove-black.gdshader" id="4_3xoar"]
+[ext_resource type="AudioStream" uid="uid://b3j7t3c6aadma" path="res://assets/sounds/intro-music-2.mp3" id="6_7lgly"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oyqm6"]
+shader = ExtResource("1_y7k74")
+shader_parameter/top_color = Color(0.639, 0.655, 0.761, 1)
+shader_parameter/bottom_color = Color(0.612, 0.165, 0.439, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kpexm"]
+font = ExtResource("3_3xoar")
+font_size = 112
+outline_color = Color(0.639216, 0.654902, 0.760784, 1)
+shadow_size = 28
+shadow_color = Color(0.2, 0.2, 0.2, 1)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7lgly"]
+font = ExtResource("3_3xoar")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0.2, 0.2, 0.2, 1)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mom7w"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lgly"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0824t"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nuqgq"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lx2ly"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jil77"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16uvt"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upcoo"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjryj"]
+atlas = ExtResource("2_kpexm")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ranr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mom7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lgly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0824t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nuqgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lx2ly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jil77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16uvt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upcoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjryj")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mom7w"]
+shader = ExtResource("4_3xoar")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3xoar"]
+viewport_path = NodePath("ColorRect/MarginContainer/VBoxContainer/SubViewport")
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7lgly")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_oyqm6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="ColorRect/MarginContainer/VBoxContainer"]
+transparent_bg = true
+size = Vector2i(1280, 960)
+render_target_update_mode = 4
+
+[node name="Control" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -357.0
+offset_top = 120.0
+offset_right = 357.0
+offset_bottom = 237.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Fast Furniture Freestyle"
+label_settings = SubResource("LabelSettings_kpexm")
+
+[node name="CallToAction" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/SubViewport/Control"]
+layout_mode = 0
+offset_left = 427.99
+offset_top = 773.26
+offset_right = 832.99
+offset_bottom = 831.26
+pivot_offset = Vector2(180, 0)
+text = "Press the space key"
+label_settings = SubResource("LabelSettings_7lgly")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ColorRect/MarginContainer/VBoxContainer"]
+position = Vector2(133, 75)
+scale = Vector2(2.5625, 2.5625)
+sprite_frames = SubResource("SpriteFrames_3ranr")
+animation = &"run"
+autoplay = "run"
+frame = 3
+frame_progress = 0.626549
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_mom7w")
+layout_mode = 2
+offset_right = 1280.0
+offset_bottom = 960.0
+scale = Vector2(0.25, 0.25)
+texture = SubResource("ViewportTexture_3xoar")
+stretch_mode = 5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7lgly")
+volume_db = -4.159
+autoplay = true
+playback_type = 1
