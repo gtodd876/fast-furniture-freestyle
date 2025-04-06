@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://yxhouhiyysb8"]
+
+[ext_resource type="Script" uid="uid://cp1xnqn3p1815" path="res://level_complete_popup.gd" id="1_n8b8x"]
+[ext_resource type="FontVariation" uid="uid://kkndpd4qrc2f" path="res://assets/fonts/baumans_font_variation.tres" id="2_khgq7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2dyfj"]
+font = ExtResource("2_khgq7")
+font_size = 32
+
+[sub_resource type="Gradient" id="Gradient_4rgqc"]
+offsets = PackedFloat32Array(0, 0.399281, 0.68705, 0.998201)
+colors = PackedColorArray(1, 0.843137, 0, 1, 0, 1, 1, 1, 0.576471, 0.439216, 0.858824, 1, 1, 0.411765, 0.705882, 1)
+
+[node name="LevelCompletePopup" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_n8b8x")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LevelCompleteLabel" type="Label" parent="CenterContainer"]
+layout_mode = 2
+text = "Level Complete!"
+label_settings = SubResource("LabelSettings_2dyfj")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(157, 122)
+emitting = false
+amount = 100
+lifetime = 3.0
+explosiveness = 0.8
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+color_ramp = SubResource("Gradient_4rgqc")
