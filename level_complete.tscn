@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=3 uid="uid://di2oyxxvckwjp"]
+
+[ext_resource type="Script" uid="uid://bys7okyi8a5c8" path="res://level_complete.gd" id="1_sxtul"]
+[ext_resource type="FontVariation" uid="uid://kkndpd4qrc2f" path="res://assets/fonts/baumans_font_variation.tres" id="2_xvwna"]
+[ext_resource type="Texture2D" uid="uid://x7pnyd2rse23" path="res://assets/images/furniture-sheet.png" id="3_qjgpd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xmsg"]
+atlas = ExtResource("3_qjgpd")
+region = Rect2(192, 223.75, 32.5, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63p37"]
+atlas = ExtResource("3_qjgpd")
+region = Rect2(191.5, 175.75, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lq25"]
+atlas = ExtResource("3_qjgpd")
+region = Rect2(192, 127.25, 32, 33.5)
+
+[node name="LevelComplete" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sxtul")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.843137, 0.482353, 0.729412, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -27.0
+offset_right = 20.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 9
+
+[node name="LevelCompleteLabel" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_colors/font_outline_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("2_xvwna")
+theme_override_font_sizes/font_size = 32
+text = "Level Complete"
+
+[node name="TimeLabel" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("2_xvwna")
+theme_override_font_sizes/font_size = 24
+text = "Time 00:00"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ScoreLabel" type="Label" parent="Background/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("2_xvwna")
+theme_override_font_sizes/font_size = 24
+text = "Score"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Teal" type="HBoxContainer" parent="Background/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Background/VBoxContainer/HBoxContainer/Teal"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_8xmsg")
+
+[node name="TealLabel" type="Label" parent="Background/VBoxContainer/HBoxContainer/Teal"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "X"
+
+[node name="Pink" type="HBoxContainer" parent="Background/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Background/VBoxContainer/HBoxContainer/Pink"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_63p37")
+
+[node name="PinkLabel" type="Label" parent="Background/VBoxContainer/HBoxContainer/Pink"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "X"
+
+[node name="Purple" type="HBoxContainer" parent="Background/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Background/VBoxContainer/HBoxContainer/Purple"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_2lq25")
+
+[node name="PurpleLabel" type="Label" parent="Background/VBoxContainer/HBoxContainer/Purple"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "X"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.247059, 0.247059, 0.454902, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("2_xvwna")
+text = "Press space to play again"

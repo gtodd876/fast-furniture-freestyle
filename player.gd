@@ -3,6 +3,7 @@ extends CharacterBody2D
 enum PlayerState { IDLE, RUN, JUMP, CARTWHEEL }
 var score: int = 0
 signal score_changed(new_score)
+var level_finished = false  # Add this to track level completion
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var jump_sfx: AudioStreamPlayer = $jump_sfx
@@ -89,8 +90,20 @@ func change_state(new_state: PlayerState) -> void:
 		PlayerState.CARTWHEEL:
 			print("play animationd")
 			animation_player.play("cartwheel")
+			
+func stop_input():
+	level_finished = true
+	change_state(PlayerState.IDLE)
+	
+	# Optionally, you can add any additional stopping logic here
+	# For example, freezing velocity
+	velocity = Vector2.ZERO
+	
 
 func get_input(delta: float) -> void:
+	# Add a check to prevent input when level is finished
+	if level_finished:
+		return
 	var x_input = Input.get_axis("left", "right")
 	var right = x_input == 1
 	var left = x_input == -1
@@ -178,17 +191,17 @@ func _physics_process(delta: float) -> void:
 				if just_landed:
 					print("Bouncing landed from above")
 					do_jump(true)
-			elif collider.name != "Bouncers":
-				match collider.name:
-					"Collectables":
-						print("Collectables")
-					"Obstacles":
-						print("Obstacles")
-					"FloorTiles":
-						print("FloorTiles")
-					"Sliders":
-						print("Sliders")
-					_:
-						print("Unknown collision name: ", collider.name)
+			#elif collider.name != "Bouncers":
+				#match collider.name:
+					#"Collectables":
+						#print("Collectables")
+					#"Obstacles":
+						#print("Obstacles")
+					#"FloorTiles":
+						#print("FloorTiles")
+					#"Sliders":
+						#print("Sliders")
+					#_:
+						#print("Unknown collision name: ", collider.name)
 					
 	camera_2d.zoom = camera_2d.zoom.lerp(zoom_target, 0.02)

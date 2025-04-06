@@ -1,6 +1,5 @@
 extends Area2D
 class_name Collectable
-
 @export var points: int = 10
 @export var collect_sound: AudioStream
 @export var texture: Texture2D
@@ -10,18 +9,25 @@ class_name Collectable
 
 signal collected(points)
 
+var is_collected: bool = false
 func _ready():
-	if texture:
+	if texture and sprite:
 		sprite.texture = texture
 	
 	# Connect the body_entered signal
-	body_entered.connect(_on_body_entered)
+	if !body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+	print("Collectable ready: ", name, " with ", points, " points")
 
 func _on_body_entered(body):
+	print("Body entered: ", body.name)
 	if body is CharacterBody2D:
 		collect()
 		
 func collect():
+	print("Collecting: ", name, " with ", points, " points")
+	# Set collected flag
+	is_collected = true
 	# Emit signal with points
 	collected.emit(points)
 	

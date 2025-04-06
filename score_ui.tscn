@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cutlp75wiayab"]
+
+[ext_resource type="Script" uid="uid://ctfatingcsooh" path="res://score_ui.gd" id="1_iqr5w"]
+
+[node name="ScoreUI" type="CanvasLayer"]
+script = ExtResource("1_iqr5w")
