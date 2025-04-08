@@ -4,3 +4,5 @@
 /assets
 .DS_Store
 builds
+*.dmg
+
