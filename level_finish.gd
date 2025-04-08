@@ -47,7 +47,7 @@ func setup_celebration_effects():
 	
 	# Load celebration sounds (you'll need to add these to your project)
 	var sound1 = preload("res://assets/sounds/bandura.wav") if ResourceLoader.exists("res://assets/sounds/bandura.wav") else null
-	var sound2 = preload("res://assets/sounds/intro-music.wav") if ResourceLoader.exists("res://assets/sounds/intro-music.wav") else null
+	var sound2 = preload("res://assets/sounds/Analog Bubbles_bip_1bubbles.wav") if ResourceLoader.exists("res://assets/sounds/Analog Bubbles_bip_1bubbles.wav") else null
 	
 	if sound1:
 		celebration_sounds.append(sound1)

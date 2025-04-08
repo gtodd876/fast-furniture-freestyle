@@ -4,9 +4,11 @@ extends Control
 @onready var pink_label: Label = $Background/VBoxContainer/HBoxContainer/Pink/PinkLabel
 @onready var purple_label: Label = $Background/VBoxContainer/HBoxContainer/Purple/PurpleLabel
 @onready var score_label: Label = $Background/VBoxContainer/HBoxContainer3/ScoreLabel
-@onready var grade_label: Label = $Background/VBoxContainer/HBoxContainer3/GradeLabel
 @onready var tally_sound: AudioStreamPlayer = $TallySound
 @onready var grade_audio: AudioStreamPlayer = $GradeAudio
+@onready var grade_label: Label = $Background/VBoxContainer/Control/CenterContainer/GradeLabel
+@onready var toot_audio: AudioStreamPlayer = $TootAudio
+@onready var piper_toot: AudioStreamPlayer = $PiperToot
 
 var level_score: int = 0
 var level_time: float = 0.0
@@ -23,27 +25,54 @@ var purple_count: int = 0
 var current_score: int = 0
 var animation_speed: float = 0.05  # Time between each count increment
 
+# Beat and color animation variables
+@export var beat_duration: float = 0.95238  # Duration of beat cycle
+@export var max_scale: Vector2 = Vector2(1.2, 1.2)  # Maximum scale
+@export var min_scale: Vector2 = Vector2(1.0, 1.0)  # Minimum scale
+@export var transition_type: Tween.TransitionType = Tween.TRANS_SINE
+@export var ease_type: Tween.EaseType = Tween.EASE_IN_OUT
+
+# Color cycling variables
+var color_cycle_tween: Tween
+var color_cycle_duration: float = 2.0
+var color_range: Array[Color] = [
+	Color(1, 0.5, 0.5),   # Light Red
+	Color(0.5, 1, 0.5),   # Light Green
+	Color(0.5, 0.5, 1),   # Light Blue
+	Color(1, 1, 0.5),     # Light Yellow
+	Color(1, 0.5, 1)      # Light Magenta
+]
+
+
 func _ready():
-		# Debug prints
-	print("Collectables in _ready: ", collectable_counts)
+	# Initialize anchors for grade_label (redundant but good practice)
+	grade_label.anchor_left = 0.5
+	grade_label.anchor_right = 0.5
+	grade_label.anchor_top = 0.5
+	grade_label.anchor_bottom = 0.5
+	
 	# Format time
 	var minutes = int(level_time) / 60
 	var seconds = int(level_time) % 60
 	time_label.text = "Time: %02d:%02d" % [minutes, seconds]
-	   # Initialize labels to zero
+	
+	# Initialize labels to zero
 	teal_label.text = "x 0"
 	pink_label.text = "x 0"
 	purple_label.text = "x 0"
 	score_label.text = "Score: 0"
 	
-	# Add the grade label if it doesn't exist
-	if not has_node("Background/VBoxContainer/GradeLabel"):
-		var grade_container = $Background/VBoxContainer
-		grade_label = Label.new()
-		grade_label.name = "GradeLabel"
-		grade_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		grade_label.custom_minimum_size = Vector2(0, 40)  # Give it some height
-		grade_container.add_child(grade_label)
+	# Wait for the GradeLabel to be properly initialized with correct size
+	await get_tree().process_frame
+	
+	# First, ensure the label has finished calculating its size
+	# Use get_minimum_size() which is available on Control nodes
+	var min_size = grade_label.get_minimum_size()
+	
+	# Calculate and set the correct pivot offset
+	grade_label.pivot_offset = Vector2(min_size.x / 2, 0)
+	print("Grade label size: ", grade_label.size)
+	print("Set pivot offset to: ", grade_label.pivot_offset)
 	
 	# Start the animated counting after a short delay
 	await get_tree().create_timer(0.5).timeout
@@ -60,8 +89,6 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-
-
 
 func set_level_data(score: int, time: float, collectables: Dictionary):
 	print("Received score: ", score)
@@ -152,58 +179,69 @@ func show_final_grade():
 	grade_label.modulate.a = 0
 	grade_label.text = grade_text
 	
-	# Style the grade based on result
-	var grade_color = Color.WHITE
-	var font_size = 24
-	grade_audio.play()
-	match grade:
-		"A+":
-			grade_color = Color(1, 0.8, 0.2)  # Gold
-			font_size = 32
-		"A":
-			grade_color = Color(0.2, 1, 0.2)  # Green
-			font_size = 28
-		"B":
-			grade_color = Color(0.2, 0.8, 1)  # Light Blue
-		"C":
-			grade_color = Color(1, 1, 0.2)  # Yellow
-		"D":
-			grade_color = Color(1, 0.6, 0.2)  # Orange
-		"F":
-			grade_color = Color(1, 0.2, 0.2)  # Red
-	
-	grade_label.add_theme_color_override("font_color", grade_color)
-	grade_label.add_theme_font_size_override("font_size", font_size)
+	# Ensure pivot offset is properly set when text changes
+	await get_tree().process_frame
+	var updated_size = grade_label.get_minimum_size()
+	grade_label.pivot_offset = Vector2(updated_size.x / 2, 0)
+	print("Updated grade label size after text change: ", updated_size)
+	print("Updated pivot offset: ", grade_label.pivot_offset)
+
+	if grade == "C" or grade == "D":
+		toot_audio.play()
+	elif grade == "F":
+		piper_toot.play()
+	else:
+		grade_audio.play()
 	
 	# Animate the grade appearing
-	var tween = create_tween()
-	tween.tween_property(grade_label, "modulate:a", 1.0, 0.5)
+	var appear_tween = create_tween()
+	appear_tween.tween_property(grade_label, "modulate:a", 1.0, 0.5)
 	
-	# For A+ grade, add some extra celebration
-	if grade == "A+":
-		# Play a special sound
-		# If you have a sound player: $VictorySound.play()
-		
-		# Add a pulsing animation to the text
-		await tween.finished
-		var pulse_tween = create_tween().set_loops()
-		pulse_tween.tween_property(grade_label, "self_modulate", Color(1.2, 1.2, 1.2), 0.5)
-		pulse_tween.tween_property(grade_label, "self_modulate", Color(1, 1, 1), 0.5)
+	# Start beat animation and color cycling after the grade appears
+	await appear_tween.finished
+	start_color_cycling()
 	
 	is_animating = false
 
-func get_grade_for_score(score: int) -> String:
-	var max_score = (collectable_counts["teal"] * 10) + (collectable_counts["pink"] * 20) + (collectable_counts["purple"] * 30)
+func start_color_cycling():
+	# Stop any existing color cycle tween
+	if color_cycle_tween:
+		color_cycle_tween.kill()
 	
-	if max_score == 100:
+	# Create a new color cycling tween
+	color_cycle_tween = create_tween().set_loops()
+	
+	# Cycle through colors
+	for color in color_range:
+		color_cycle_tween.tween_method(
+			func(c): 
+				grade_label.add_theme_color_override("font_color", c), 
+			Color.WHITE, 
+			color, 
+			color_cycle_duration / color_range.size()
+		)
+	
+	# Optional: Add a reset to white at the end of each cycle
+	color_cycle_tween.tween_method(
+		func(c): 
+			grade_label.add_theme_color_override("font_color", c), 
+		color_range[-1], 
+		Color.WHITE, 
+		color_cycle_duration / color_range.size()
+	)
+
+func get_grade_for_score(score: int) -> String:
+	print('final_score: ', score, "/100")
+	
+	if score >= 95:
 		return "A+"
-	elif max_score >= 90:
+	elif score >= 90:
 		return "A"
-	elif max_score >= 80:
+	elif score >= 80:
 		return "B"
-	elif max_score >= 70:
+	elif score >= 70:
 		return "C"
-	elif max_score >= 60:
+	elif score >= 60:
 		return "D"
 	else:
 		return "F"
